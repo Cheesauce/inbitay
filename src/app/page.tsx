@@ -6,6 +6,7 @@ import Marquee from "@/components/Marquee";
 import MusicPlayer from "@/components/MusicPlayer";
 import Petals from "@/components/Petals";
 import Reveal from "@/components/Reveal";
+import RsvpForm from "@/components/RsvpForm";
 import {
   CakeIcon,
   FloralDivider,
@@ -388,16 +389,11 @@ export default function Home() {
                 Will you be there?
               </h2>
               <p className="mx-auto mt-5 max-w-sm text-sm leading-relaxed text-cream/70">
-                Leave us your details and we&apos;ll send the formal invitation,
-                travel notes, and everything else as the day gets closer.
+                Leave us your name and we&apos;ll save your seat. The formal
+                invitation follows closer to the day.
               </p>
-              <a
-                href="#"
-                className="mt-10 inline-block rounded-full bg-cream px-12 py-4 text-xs uppercase tracking-label text-wine-deep shadow-[0_18px_40px_-18px_rgba(0,0,0,0.7)] transition hover:bg-white"
-              >
-                Share your details
-              </a>
-              <p className="mt-6 text-[0.6rem] uppercase tracking-label text-cream/45">
+              <RsvpForm />
+              <p className="mt-8 text-[0.6rem] uppercase tracking-label text-cream/45">
                 Formal invitation to follow
               </p>
             </Reveal>

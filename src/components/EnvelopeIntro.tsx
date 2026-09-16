@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { Monogram } from "./Ornaments";
-import { INVITATION_OPENED } from "./MusicPlayer";
+import { INVITATION_UNSEALED } from "./MusicPlayer";
 
 type Stage = "sealed" | "breaking" | "opening" | "open" | "dismissed";
 
@@ -40,6 +40,8 @@ export default function EnvelopeIntro() {
   function handleBreakSeal() {
     if (stage !== "sealed") return;
     setStage("breaking");
+    // synchronous: the music has to land on the press, not trail the animation
+    window.dispatchEvent(new Event(INVITATION_UNSEALED));
     timers.current.push(setTimeout(() => setStage("opening"), 520));
     timers.current.push(setTimeout(() => setStage("open"), 1400));
   }
@@ -250,10 +252,7 @@ export default function EnvelopeIntro() {
           {isOpen && (
             <button
               type="button"
-              onClick={() => {
-                window.dispatchEvent(new Event(INVITATION_OPENED));
-                setStage("dismissed");
-              }}
+              onClick={() => setStage("dismissed")}
               className="animate-fade-up cursor-pointer rounded-full px-10 py-3 text-xs uppercase tracking-label text-cream shadow-[0_14px_28px_-14px_rgba(47,10,19,0.8)] transition hover:brightness-110"
               style={{
                 background:

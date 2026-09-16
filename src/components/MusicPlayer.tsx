@@ -2,46 +2,81 @@
 
 import { useEffect, useRef, useState } from "react";
 
-export const INVITATION_OPENED = "invitation:opened";
+export const INVITATION_UNSEALED = "invitation:unsealed";
+
+// the recording opens with 12.0s of digital silence before the piano enters
+const TRACK_START = 12;
 
 export default function MusicPlayer() {
   const audioRef = useRef<HTMLAudioElement>(null);
+  const startedRef = useRef(false);
   const [playing, setPlaying] = useState(false);
   const [ready, setReady] = useState(false);
 
   useEffect(() => {
-    // start buffering on the first touch (the seal press) so playback is instant
-    const prime = () => audioRef.current?.load();
+    // iOS only unlocks audio inside a real gesture, so do a silent play/pause on
+    // the first touch. pointerdown lands a few ms before the click that starts the
+    // music for real, so never pause or rewind once that start has happened.
+    const prime = async () => {
+      const audio = audioRef.current;
+      if (!audio || startedRef.current) return;
+      audio.volume = 0;
+      try {
+        await audio.play();
+        if (startedRef.current) return;
+        audio.pause();
+      } catch {
+        // locked until the seal breaks; start() retries there
+      }
+      if (!startedRef.current) audio.currentTime = TRACK_START;
+    };
     window.addEventListener("pointerdown", prime, { once: true });
     return () => window.removeEventListener("pointerdown", prime);
   }, []);
 
   useEffect(() => {
-    // the open click is the user gesture browsers require before audio may start
+    // brief enough to read as instant, long enough not to pop
+    const fadeIn = (audio: HTMLAudioElement) => {
+      setPlaying(true);
+      const target = 0.55;
+      const fade = setInterval(() => {
+        if (audio.volume >= target - 0.06) {
+          audio.volume = target;
+          clearInterval(fade);
+          return;
+        }
+        audio.volume = Math.min(target, audio.volume + 0.06);
+      }, 35);
+    };
+
+    // fires synchronously from the press that breaks the seal, so playback begins
+    // inside the user gesture itself rather than leaning on sticky activation
     const start = () => {
       const audio = audioRef.current;
       if (!audio) return;
+      startedRef.current = true;
       setReady(true);
       audio.volume = 0;
+      if (audio.currentTime < TRACK_START) audio.currentTime = TRACK_START;
       audio
         .play()
-        .then(() => {
-          setPlaying(true);
-          const target = 0.42;
-          const fade = setInterval(() => {
-            if (audio.volume >= target - 0.02) {
-              audio.volume = target;
-              clearInterval(fade);
-              return;
-            }
-            audio.volume = Math.min(target, audio.volume + 0.02);
-          }, 90);
-        })
-        .catch(() => setPlaying(false));
+        .then(() => fadeIn(audio))
+        .catch(() => {
+          // a stricter browser refused; take the next tap anywhere as consent
+          setPlaying(false);
+          const retry = () => {
+            audio.volume = 0;
+            audio
+              .play()
+              .then(() => fadeIn(audio))
+              .catch(() => {});
+          };
+          document.addEventListener("pointerdown", retry, { once: true });
+        });
     };
 
-    window.addEventListener(INVITATION_OPENED, start);
-    return () => window.removeEventListener(INVITATION_OPENED, start);
+    window.addEventListener(INVITATION_UNSEALED, start);
+    return () => window.removeEventListener(INVITATION_UNSEALED, start);
   }, []);
 
   function toggle() {
@@ -51,14 +86,25 @@ export default function MusicPlayer() {
       audio.pause();
       setPlaying(false);
     } else {
-      audio.volume = 0.42;
+      audio.volume = 0.55;
       audio.play().then(() => setPlaying(true)).catch(() => {});
     }
   }
 
   return (
     <>
-      <audio ref={audioRef} src="/audio/kay-tagal-kitang-hinintay.mp3" loop preload="none" />
+      {/* looped by hand so repeats skip the silent lead-in, not via `loop` */}
+      <audio
+        ref={audioRef}
+        src="/audio/kay-tagal-kitang-hinintay.mp3"
+        // metadata up front so the seek to TRACK_START resolves the moment they press
+        preload="metadata"
+        onEnded={(e) => {
+          const audio = e.currentTarget;
+          audio.currentTime = TRACK_START;
+          audio.play().catch(() => setPlaying(false));
+        }}
+      />
       <button
         type="button"
         onClick={toggle}
