@@ -7,7 +7,8 @@ import { INVITATION_UNSEALED } from "./MusicPlayer";
 type Stage = "sealed" | "breaking" | "opening" | "open" | "dismissed";
 
 const COUPLE = "Kristine & Ejay";
-const DATE_LABEL = "06 . 15 . 27";
+// TODO: swap for the real date once set, e.g. "12 . 06 . 26"
+const DATE_LABEL = "Rodriguez, Rizal";
 
 const SCALLOP_X = {
   backgroundImage:

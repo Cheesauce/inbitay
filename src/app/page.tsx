@@ -17,27 +17,57 @@ import {
   Sprig,
 } from "@/components/Ornaments";
 
-const WEDDING_DATE = "2027-06-15T16:30:00";
+// TODO: set the real wedding date. Left null on purpose — a placeholder date on
+// a live invitation is worse than none, so the date line and countdown stay
+// hidden until this is filled in.
+const WEDDING_DATE: string | null = null;
+const DATE_LABEL = "Date to follow";
+
 const BRIDE = "Kristine";
 const GROOM = "Ejay";
-const VENUE_NAME = "The Willow Grove Estate";
-const VENUE_LINE = "1420 Vineyard Lane, Sonoma, California";
+
+const CHURCH = "Iglesia Ni Cristo";
+const CHURCH_LOCAL = "Lokal ng Metro Manila Hills";
+const CHURCH_ADDRESS = "Blk 75 Lot 4a, MMH San Jose, Rodriguez, Rizal";
+
+const RECEPTION = "Costa Abril Resort";
+const RECEPTION_ADDRESS = "49 Dao St, Rodriguez, Rizal";
 
 const SCHEDULE = [
-  { time: "4:30 PM", title: "Ceremony", note: "The Olive Terrace", Icon: RingsIcon },
-  { time: "5:30 PM", title: "Cocktails", note: "Garden Lawn", Icon: GlassIcon },
-  { time: "7:00 PM", title: "Dinner", note: "The Long Table", Icon: CakeIcon },
-  { time: "9:00 PM", title: "Dancing", note: "Until the last song", Icon: MusicIcon },
+  {
+    time: "2:00 PM",
+    title: "Ceremony",
+    note: "Iglesia Ni Cristo, Metro Manila Hills",
+    Icon: RingsIcon,
+  },
+  {
+    time: "5:00 PM",
+    title: "Reception",
+    note: "Doors open at Costa Abril",
+    Icon: GlassIcon,
+  },
+  {
+    time: "6:10 PM",
+    title: "Dinner",
+    note: "Then cake, and a few kind words",
+    Icon: CakeIcon,
+  },
+  {
+    time: "8:05 PM",
+    title: "After Party",
+    note: "Singing, dancing, no rush home",
+    Icon: MusicIcon,
+  },
 ];
 
 const GALLERY = [
-  { src: "/images/venue/venue-06.jpg", span: "sm:col-span-4", ratio: "aspect-[4/3]" },
-  { src: "/images/venue/venue-09.jpg", span: "sm:col-span-2", ratio: "aspect-[3/4]" },
-  { src: "/images/venue/venue-01.jpg", span: "sm:col-span-2", ratio: "aspect-square" },
-  { src: "/images/venue/venue-07.jpg", span: "sm:col-span-2", ratio: "aspect-square" },
-  { src: "/images/venue/venue-02.jpg", span: "sm:col-span-2", ratio: "aspect-square" },
-  { src: "/images/venue/venue-04.jpg", span: "sm:col-span-3", ratio: "aspect-[3/2]" },
-  { src: "/images/venue/venue-05.jpg", span: "sm:col-span-3", ratio: "aspect-[3/2]" },
+  { src: "/images/couple/piggyback.jpg", span: "sm:col-span-4", ratio: "aspect-[4/3]" },
+  { src: "/images/couple/bouquet.jpg", span: "sm:col-span-2", ratio: "aspect-[3/4]" },
+  { src: "/images/couple/lamplight.jpg", span: "sm:col-span-2", ratio: "aspect-square" },
+  { src: "/images/couple/lapel.jpg", span: "sm:col-span-2", ratio: "aspect-square" },
+  { src: "/images/couple/steps.jpg", span: "sm:col-span-2", ratio: "aspect-square" },
+  { src: "/images/couple/walking-away.jpg", span: "sm:col-span-3", ratio: "aspect-[3/2]" },
+  { src: "/images/couple/night.jpg", span: "sm:col-span-3", ratio: "aspect-[3/2]" },
 ];
 
 export default function Home() {
@@ -53,8 +83,8 @@ export default function Home() {
         <section className="relative flex min-h-[100svh] items-end justify-center overflow-hidden">
           <div className="absolute inset-0 overflow-hidden">
             <Image
-              src="/images/venue/venue-08.jpg"
-              alt={`${BRIDE} and ${GROOM}`}
+              src="/images/couple/silhouette.jpg"
+              alt={`${BRIDE} and ${GROOM} at sunset`}
               fill
               priority
               sizes="100vw"
@@ -94,10 +124,10 @@ export default function Home() {
             </h1>
 
             <p className="mt-7 text-[0.62rem] uppercase tracking-label text-cream/80 sm:text-xs">
-              Saturday · June 15, 2027
+              {DATE_LABEL}
             </p>
             <p className="mt-2 text-[0.62rem] uppercase tracking-label text-gold-light/80">
-              Sonoma, California
+              Rodriguez, Rizal
             </p>
 
             <div className="mt-10 flex flex-col items-center gap-2 text-cream/50">
@@ -112,9 +142,9 @@ export default function Home() {
         <Marquee
           items={[
             "Save the Date",
-            "06 . 15 . 27",
-            "Sonoma, California",
-            "Black Tie Optional",
+            DATE_LABEL,
+            "Rodriguez, Rizal",
+            "Dress Code: Black",
           ]}
         />
 
@@ -133,25 +163,26 @@ export default function Home() {
 
             <Reveal delay={120}>
               <p className="mt-10 font-serif text-xl leading-relaxed text-wine-deep/85 sm:text-2xl">
-                We found our favourite people, our favourite hill, and a
-                Saturday in June. Now all that&apos;s missing is you.
+                We found our favourite person, our favourite hill, and a
+                Saturday worth dressing up for. Now all that&apos;s missing is
+                you.
               </p>
             </Reveal>
 
             <Reveal delay={220}>
               <p className="mt-8 text-sm leading-loose text-wine-deep/60">
-                Join us for an evening of vows under the olive trees, long
-                tables, warm light, and dancing well past our bedtime. Come
-                hungry, come ready to cry a little, and stay for the last song.
+                Join us as we say our vows, then carry the celebration up the
+                road for dinner, singing far too loudly, and dancing well past
+                our bedtime.
               </p>
             </Reveal>
 
             <Reveal delay={300}>
               <div className="mt-12 font-script text-4xl text-wine sm:text-5xl">
-                {VENUE_NAME}
+                {CHURCH_LOCAL}
               </div>
               <p className="mt-4 text-[0.65rem] uppercase tracking-label text-wine-deep/60">
-                {VENUE_LINE}
+                {CHURCH_ADDRESS}
               </p>
               <FloralDivider className="mx-auto mt-8 h-8 w-64 rotate-180 text-gold" />
             </Reveal>
@@ -161,7 +192,7 @@ export default function Home() {
         {/* ── Countdown ────────────────────────── */}
         <section className="relative overflow-hidden py-24 sm:py-32">
           <Image
-            src="/images/venue/venue-10.jpg"
+            src="/images/couple/foreheads.jpg"
             alt=""
             fill
             sizes="100vw"
@@ -176,14 +207,27 @@ export default function Home() {
                 Until we say I do
               </span>
             </Reveal>
-            <Reveal delay={120} className="mt-10 w-full">
-              <Countdown target={WEDDING_DATE} />
-            </Reveal>
-            <Reveal delay={240}>
-              <p className="mt-12 font-script text-3xl text-cream/90 sm:text-4xl">
-                and counting
-              </p>
-            </Reveal>
+            {WEDDING_DATE ? (
+              <>
+                <Reveal delay={120} className="mt-10 w-full">
+                  <Countdown target={WEDDING_DATE} />
+                </Reveal>
+                <Reveal delay={240}>
+                  <p className="mt-12 font-script text-3xl text-cream/90 sm:text-4xl">
+                    and counting
+                  </p>
+                </Reveal>
+              </>
+            ) : (
+              <Reveal delay={120}>
+                <p className="mt-8 font-script text-4xl text-cream/90 sm:text-5xl">
+                  very soon
+                </p>
+                <p className="mt-6 text-[0.62rem] uppercase tracking-label text-gold-light/60">
+                  The date is being finalised
+                </p>
+              </Reveal>
+            )}
           </div>
         </section>
 
@@ -216,17 +260,111 @@ export default function Home() {
                 </Reveal>
               ))}
             </div>
+
+            <Reveal delay={200}>
+              <p className="mx-auto mt-14 max-w-md text-center text-sm italic leading-relaxed text-wine-deep/55">
+                Please come a little early — the ceremony starts promptly, and
+                we&apos;d hate for you to miss the walk down the aisle.
+              </p>
+            </Reveal>
+          </div>
+        </section>
+
+        {/* ── Where ────────────────────────────── */}
+        <section className="grain relative bg-cream px-6 py-24 sm:py-32">
+          <div className="mx-auto max-w-5xl">
+            <Reveal className="text-center">
+              <span className="text-[0.6rem] uppercase tracking-label text-wine/50">
+                Where to find us
+              </span>
+              <h2 className="mt-5 font-serif text-4xl font-light text-wine-deep sm:text-5xl">
+                Two stops, five minutes apart
+              </h2>
+            </Reveal>
+
+            <div className="mt-16 grid gap-10 md:grid-cols-2">
+              <Reveal>
+                <div className="relative aspect-[4/5] overflow-hidden rounded-sm shadow-xl sm:aspect-[4/3]">
+                  <Image
+                    src="/images/couple/church.jpg"
+                    alt={`${CHURCH}, ${CHURCH_LOCAL}`}
+                    fill
+                    sizes="(max-width: 768px) 100vw, 45vw"
+                    className="object-cover"
+                  />
+                </div>
+                <span className="mt-6 block text-[0.6rem] uppercase tracking-label text-wine/50">
+                  The Ceremony · 2:00 PM
+                </span>
+                <h3 className="mt-3 font-serif text-2xl text-wine-deep">
+                  {CHURCH}
+                </h3>
+                <p className="mt-1 font-script text-2xl text-wine">
+                  {CHURCH_LOCAL}
+                </p>
+                <p className="mt-3 text-sm leading-relaxed text-wine-deep/60">
+                  {CHURCH_ADDRESS}
+                </p>
+                <p className="mt-4 text-sm italic text-wine-deep/55">
+                  Our ceremony is gadget-free — please keep phones and cameras
+                  away so everyone can be fully present.
+                </p>
+              </Reveal>
+
+              <Reveal delay={140}>
+                <div className="relative aspect-[4/5] overflow-hidden rounded-sm shadow-xl sm:aspect-[4/3]">
+                  <Image
+                    src="/images/couple/costa-abril.jpg"
+                    alt={RECEPTION}
+                    fill
+                    sizes="(max-width: 768px) 100vw, 45vw"
+                    className="object-cover"
+                  />
+                </div>
+                <span className="mt-6 block text-[0.6rem] uppercase tracking-label text-wine/50">
+                  The Reception · 5:00 PM
+                </span>
+                <h3 className="mt-3 font-serif text-2xl text-wine-deep">
+                  {RECEPTION}
+                </h3>
+                <p className="mt-1 font-script text-2xl text-wine">
+                  Dinner &amp; celebration
+                </p>
+                <p className="mt-3 text-sm leading-relaxed text-wine-deep/60">
+                  {RECEPTION_ADDRESS}
+                </p>
+                <p className="mt-4 text-sm italic text-wine-deep/55">
+                  Doors open at five. Come hungry — dinner is served just after
+                  six.
+                </p>
+              </Reveal>
+            </div>
           </div>
         </section>
 
         {/* ── Story + polaroids ────────────────── */}
-        <section className="grain relative bg-cream px-6 py-24 sm:py-32">
+        <section className="bg-parchment px-6 py-24 sm:py-32">
           <div className="mx-auto grid max-w-5xl items-center gap-16 lg:grid-cols-2">
             <Reveal className="relative mx-auto h-[420px] w-full max-w-sm sm:h-[520px]">
               <div className="absolute left-0 top-0 w-[56%] rotate-[-5deg] bg-white p-3 pb-10 shadow-[0_30px_50px_-24px_rgba(47,10,19,0.55)]">
                 <div className="relative aspect-[4/5]">
                   <Image
-                    src="/images/venue/venue-09.jpg"
+                    src="/images/couple/forest.jpg"
+                    alt=""
+                    fill
+                    loading="eager"
+                    sizes="(max-width: 640px) 60vw, 240px"
+                    className="filmic object-cover"
+                  />
+                </div>
+                <span className="absolute bottom-3 left-0 right-0 text-center font-script text-lg text-wine/70">
+                  just us
+                </span>
+              </div>
+              <div className="absolute bottom-0 right-0 w-[56%] rotate-[4deg] bg-white p-3 pb-10 shadow-[0_30px_50px_-24px_rgba(47,10,19,0.55)]">
+                <div className="relative aspect-[4/5]">
+                  <Image
+                    src="/images/couple/ring.jpg"
                     alt=""
                     fill
                     loading="eager"
@@ -236,21 +374,6 @@ export default function Home() {
                 </div>
                 <span className="absolute bottom-3 left-0 right-0 text-center font-script text-lg text-wine/70">
                   she said yes
-                </span>
-              </div>
-              <div className="absolute bottom-0 right-0 w-[56%] rotate-[4deg] bg-white p-3 pb-10 shadow-[0_30px_50px_-24px_rgba(47,10,19,0.55)]">
-                <div className="relative aspect-[4/5]">
-                  <Image
-                    src="/images/venue/venue-10.jpg"
-                    alt=""
-                    fill
-                    loading="eager"
-                    sizes="(max-width: 640px) 60vw, 240px"
-                    className="filmic object-cover"
-                  />
-                </div>
-                <span className="absolute bottom-3 left-0 right-0 text-center font-script text-lg text-wine/70">
-                  golden hour
                 </span>
               </div>
             </Reveal>
@@ -267,14 +390,13 @@ export default function Home() {
               <div className="my-7 h-px w-20 bg-gold/60" />
               <p className="text-sm leading-loose text-wine-deep/65">
                 It started with a walk that was supposed to be twenty minutes
-                and turned into three hours. Somewhere between the overgrown
-                path and the view at the top, we ran out of small talk and
-                started making plans instead.
+                and turned into three hours. Somewhere between the pine trees
+                and the view at the top, we ran out of small talk and started
+                making plans instead.
               </p>
               <p className="mt-5 text-sm leading-loose text-wine-deep/65">
-                Years later, on the same hill, with calla lilies and a slightly
-                shaking hand, the question finally got asked. The answer took
-                about half a second.
+                Years later, with calla lilies and a slightly shaking hand, the
+                question finally got asked. The answer took about half a second.
               </p>
               <p className="mt-8 font-script text-3xl text-wine">
                 {BRIDE} &amp; {GROOM}
@@ -291,7 +413,7 @@ export default function Home() {
                 A Few Favourites
               </span>
               <h2 className="mt-5 font-serif text-4xl font-light text-cream sm:text-5xl">
-                The place, the people
+                The two of us, so far
               </h2>
               <FloralDivider className="mx-auto mt-7 h-8 w-64 text-gold/70" />
             </Reveal>
@@ -320,56 +442,84 @@ export default function Home() {
 
         {/* ── Details ──────────────────────────── */}
         <section className="bg-parchment px-6 py-24 sm:py-32">
-          <div className="mx-auto grid max-w-4xl gap-14 text-center sm:grid-cols-3 sm:text-left">
-            <Reveal>
+          <div className="mx-auto max-w-5xl">
+            <Reveal className="mb-16 text-center">
               <span className="text-[0.6rem] uppercase tracking-label text-wine/50">
-                Dress Code
+                Good to Know
               </span>
-              <h3 className="mt-4 font-serif text-2xl text-wine-deep">
-                Black tie optional
-              </h3>
-              <p className="mt-3 text-sm leading-relaxed text-wine-deep/60">
-                Long dresses, dark suits. Grass underfoot — bring the sensible
-                shoes and change into the pretty ones.
-              </p>
-              <div className="mt-5 flex justify-center gap-2 sm:justify-start">
-                {["var(--wine)", "var(--dusty-blue)", "var(--gold)", "var(--blush)"].map(
-                  (c) => (
+              <h2 className="mt-5 font-serif text-4xl font-light text-wine-deep sm:text-5xl">
+                The details
+              </h2>
+            </Reveal>
+
+            <div className="grid gap-14 text-center sm:grid-cols-3 sm:text-left">
+              <Reveal>
+                <span className="text-[0.6rem] uppercase tracking-label text-wine/50">
+                  Dress Code
+                </span>
+                <h3 className="mt-4 font-serif text-2xl text-wine-deep">
+                  Guests in black
+                </h3>
+                <p className="mt-3 text-sm leading-relaxed text-wine-deep/60">
+                  Anything from the black palette. Kindly no t-shirts, denim,
+                  slippers or sports shoes.
+                </p>
+                <div className="mt-5 flex justify-center gap-2 sm:justify-start">
+                  {["#000000", "#111111", "#1c1c1c", "#262626", "#333333"].map(
+                    (c) => (
+                      <span
+                        key={c}
+                        className="h-7 w-7 rounded-full ring-1 ring-wine-deep/15"
+                        style={{ background: c }}
+                      />
+                    ),
+                  )}
+                </div>
+
+                <span className="mt-8 block text-[0.6rem] uppercase tracking-label text-wine/50">
+                  Principal Sponsors
+                </span>
+                <p className="mt-3 text-sm leading-relaxed text-wine-deep/60">
+                  Burgundy, in any shade you like.
+                </p>
+                <div className="mt-4 flex justify-center gap-2 sm:justify-start">
+                  {["#2B0A07", "#3F0A12", "#6E1116", "#91161C", "#B3242B"].map((c) => (
                     <span
                       key={c}
                       className="h-7 w-7 rounded-full ring-1 ring-wine-deep/15"
                       style={{ background: c }}
                     />
-                  ),
-                )}
-              </div>
-            </Reveal>
+                  ))}
+                </div>
+              </Reveal>
 
-            <Reveal delay={120}>
-              <span className="text-[0.6rem] uppercase tracking-label text-wine/50">
-                Getting There
-              </span>
-              <h3 className="mt-4 font-serif text-2xl text-wine-deep">
-                {VENUE_NAME}
-              </h3>
-              <p className="mt-3 text-sm leading-relaxed text-wine-deep/60">
-                {VENUE_LINE}. Parking on site, and a shuttle from town every
-                half hour from 3:30 PM.
-              </p>
-            </Reveal>
+              <Reveal delay={120}>
+                <span className="text-[0.6rem] uppercase tracking-label text-wine/50">
+                  A Gadget-Free Ceremony
+                </span>
+                <h3 className="mt-4 font-serif text-2xl text-wine-deep">
+                  Be with us, not behind a screen
+                </h3>
+                <p className="mt-3 text-sm leading-relaxed text-wine-deep/60">
+                  Please keep phones and cameras tucked away during the
+                  ceremony. Our photographer has it covered, and we&apos;ll
+                  happily share every shot afterwards.
+                </p>
+              </Reveal>
 
-            <Reveal delay={240}>
-              <span className="text-[0.6rem] uppercase tracking-label text-wine/50">
-                Good to Know
-              </span>
-              <h3 className="mt-4 font-serif text-2xl text-wine-deep">
-                Adults only, please
-              </h3>
-              <p className="mt-3 text-sm leading-relaxed text-wine-deep/60">
-                We adore your little ones — this one is a late night, so leave
-                them with a sitter and enjoy the evening off.
-              </p>
-            </Reveal>
+              <Reveal delay={240}>
+                <span className="text-[0.6rem] uppercase tracking-label text-wine/50">
+                  Gift Guide
+                </span>
+                <h3 className="mt-4 font-serif text-2xl text-wine-deep">
+                  Your presence is the gift
+                </h3>
+                <p className="mt-3 text-sm leading-relaxed text-wine-deep/60">
+                  Gifts are truly not expected. Should you wish to bless us, a
+                  monetary gift would help us begin our married life together.
+                </p>
+              </Reveal>
+            </div>
           </div>
         </section>
 
@@ -410,7 +560,7 @@ export default function Home() {
             {BRIDE} &amp; {GROOM}
           </div>
           <div className="mt-5 text-[0.55rem] uppercase tracking-label text-gold/50">
-            06 · 15 · 27
+            Rodriguez, Rizal
           </div>
         </footer>
       </main>
